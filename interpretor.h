@@ -18,6 +18,7 @@ private:
 
     void interpretDefinition(DefinitionNode* def);
     void interpretAssignment(AssignmentNode* assign);
+    void interpretIf(IfNode* ifNode);
 
     QVariant interpretFunction(FunctionRow* func, QList<VariableRow*> args = QList<VariableRow*>());
     QVariant interpretMath(ExpressionNode* exp);

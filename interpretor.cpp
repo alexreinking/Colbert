@@ -128,6 +128,9 @@ QVariant Interpretor::interpretFunction(FunctionRow *func, QList<VariableRow*> a
                 return result;
             }
             break;
+        case If:
+            interpretIf(static_cast<IfNode*>(currentInstruction));
+            break;
         default:
             break;
         }
@@ -160,6 +163,97 @@ void Interpretor::interpretAssignment(AssignmentNode *assign)
         interpretDefinition(tmp);
         delete tmp;
     }
+}
+
+void Interpretor::interpretIf(IfNode *ifNode)
+{
+    Scope *myScope = new Scope();
+    scopes.push(myScope);
+
+    QVariant conditionResult;
+    conditionResult = interpretMath(ifNode->getCondition());
+    if(int(conditionResult.toDouble()))
+    {
+        for(int i = 0; i < ifNode->getChildren().size(); i++)
+        {
+            CodeTreeNode* currentInstruction = ifNode->getChildren().at(i);
+            switch(currentInstruction->myType())
+            {
+            case Definition:
+                interpretDefinition(static_cast<DefinitionNode*>(currentInstruction));
+                break;
+            case Function:
+                addFunctionToScope(static_cast<FunctionNode*>(currentInstruction));
+                break;
+            case Assignment:
+                interpretAssignment(static_cast<AssignmentNode*>(currentInstruction));
+                break;
+            case If:
+                interpretIf(static_cast<IfNode*>(currentInstruction));
+                break;
+            default:
+                break;
+            }
+        }
+    }
+    else
+    {
+        foreach(ElseIfNode* elseIf, ifNode->getNeighbor())
+        {
+            if(elseIf->getCondition()) {
+                conditionResult = interpretMath(elseIf->getCondition());
+                if(int(conditionResult.toDouble()))
+                {
+                    for(int i = 0; i < elseIf->getChildren().size(); i++)
+                    {
+                        CodeTreeNode* currentInstruction = elseIf->getChildren().at(i);
+                        switch(currentInstruction->myType())
+                        {
+                        case Definition:
+                            interpretDefinition(static_cast<DefinitionNode*>(currentInstruction));
+                            break;
+                        case Function:
+                            addFunctionToScope(static_cast<FunctionNode*>(currentInstruction));
+                            break;
+                        case Assignment:
+                            interpretAssignment(static_cast<AssignmentNode*>(currentInstruction));
+                            break;
+                        case If:
+                            interpretIf(static_cast<IfNode*>(currentInstruction));
+                            break;
+                        default:
+                            break;
+                        }
+                    }
+                    break;
+                }
+            } else {
+                for(int i = 0; i < elseIf->getChildren().size(); i++)
+                {
+                    CodeTreeNode* currentInstruction = elseIf->getChildren().at(i);
+                    switch(currentInstruction->myType())
+                    {
+                    case Definition:
+                        interpretDefinition(static_cast<DefinitionNode*>(currentInstruction));
+                        break;
+                    case Function:
+                        addFunctionToScope(static_cast<FunctionNode*>(currentInstruction));
+                        break;
+                    case Assignment:
+                        interpretAssignment(static_cast<AssignmentNode*>(currentInstruction));
+                        break;
+                    case If:
+                        interpretIf(static_cast<IfNode*>(currentInstruction));
+                        break;
+                    default:
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+    scopes.pop();
 }
 
 QVariant Interpretor::interpretMath(ExpressionNode *exp)
@@ -440,7 +534,8 @@ QVariant Interpretor::interpretMath(ExpressionNode *exp)
         Symbol* func;
         func = findSymbol(static_cast<ExpressionFunctionNode*>(exp)->getName().getConstData());
         if(!func) {
-            cerr << "FATAL: Function \"" << qPrintable(static_cast<ExpressionFunctionNode*>(exp)->getName().getConstData()) << "\" not found!" << endl;
+            cerr << "FATAL: Function \"" << qPrintable(static_cast<ExpressionFunctionNode*>(exp)->getName().getConstData())
+                    << "\" not found!" << endl;
             exit(1);
         }
         if(func->getType() == FunctionSymbol) {
