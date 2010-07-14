@@ -80,8 +80,17 @@ If a variable is not in the current scope or one of the parent scopes, you canno
 7) If there are no errors, the interpretor runs the whole program and exits cleanly. Otherwise, since I haven't written any
    error handling code, it will crash.
 
-....All in 1945 lines of code.... xD
-
 Hope you can still appreciate some ALPHA software. ;)
 
-(C) 2010 Alex Reinking  <- That's evidence of my weird sence of humor.
+Here's the sloccount output:
+
+Total Physical Source Lines of Code (SLOC)                = 1,999
+Development Effort Estimate, Person-Years (Person-Months) = 0.41 (4.97)
+ (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
+Schedule Estimate, Years (Months)                         = 0.38 (4.60)
+ (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
+Estimated Average Number of Developers (Effort/Schedule)  = 1.08
+Total Estimated Cost to Develop                           = $ 55,911
+ (average salary = $56,286/year, overhead = 2.40).
+
+(C) 2010 Alex Reinking
