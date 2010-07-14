@@ -1,0 +1,87 @@
+***BEST READ WITH A MONOSPACE FONT***
+
+To use:
+If you have a 64-bit openSuSE operating system (11.2 or later) you may be able to skip to step 5
+  1) Open a terminal
+  2) Go to this folder
+  3) Run these commands:
+     > make clean
+     > rm ./Colbert
+     > qmake
+     > make
+  4) Wait a few seconds and you should be set.
+  5) To run the test program run:
+     > ./Colbert test.clb
+
+---
+
+Notes about the ALPHA-STAGE interpretor:
+  1) There is no code to handle errors, bad input will often crash or hang the program.
+     My goal, so far has been ONLY to get simple programs to run. Once the language is complete
+     and bug free on my test programs, I will add error handling.
+  2) Because If statements, and by extention, loops, are buggy as HELL, I have removed them from this version of the interpretor, so that you can actually run the example program.
+  3) The syntax is superficially similar to C/C++, you should be able to extend, and experiment with my example
+  4) There are no I/O facilities. 
+     The interpretor prints a textual representation of the code tree, and all of the changes to variables as the program runs so you can see what happens.
+
+---
+
+Here is a detailed explanation as to how Colbert works:
+
+1) A stream of characters, part of the program is fed into the program:
+"func main()" ...
+
+2) This stream gets converted into logical units, known as tokens:
+func : FUNCTION_KEYWORD
+main : IDENTIFIER
+(    : OPEN_PARENTHESIS
+)    : CLOSE_PARENTHESIS
+
+3) Based off of the organization of these tokens, a tree is generated, this tree stores commands, in order,
+   which are to be executed.
+
+FUNCTION_KEYWORD IDENTIFIER OPEN_PARENTHESIS CLOSE_PARENTHESIS
+...turns into...
+Function IDENTIFIER
+Arguments:
+|--- Children ---|
+    ....
+|---    End   ---|
+
+The interpretor prints out the tree, as I mentioned earlier.
+
+4) Then, any code not inside a function is removed, save for variable declarations, and the functions themselves.
+
+5) A scope is created, a scope is simply a list of variables, functions, and their values. The variables outside of functions that were
+   not removed are added to this, the Global(all functions can "see" the variables here) Scope. You can define functions inside of other functions in Colbert.
+   Additionally, all variables are arrays. The array symbols are pure syntactic sugar.
+
+Here is a simple diagram of a scope:
+
+-------------------------------------
+| Parent: NONE (Global Scope)       |
+-------------------------------------
+|         Variable List             |
+-------------------------------------
+| VAR  | num      | 3               |
+-------------------------------------
+| VAR  | num2     | 5               |
+-------------------------------------
+|           Function List           |
+-------------------------------------
+| FUNC | main     | <Command List>  |
+-------------------------------------
+
+If a variable is not in the current scope or one of the parent scopes, you cannot access that variable.
+
+6) The main function is looked up, and execution begins. All functions get their own scope every time they are called,
+   functions are able to modify variables of their callers, but this action can be undefined.
+
+7) If there are no errors, the interpretor runs the whole program and exits cleanly. Otherwise, since I haven't written any
+   error handling code, it will crash.
+
+....All in 1945 lines of code.... xD
+
+Hope you can still appreciate some ALPHA software. ;)
+
+(C) 2010 Alex Reinking  <- That's evidence of my weird sence of humor.

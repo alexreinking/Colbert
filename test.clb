@@ -1,0 +1,21 @@
+func addToArray(@ref,i,n)
+{
+	if(n >= 0) {
+		ref[i] = ref[i] + n;
+	} else {
+		ref[i] = ref[i] + 1;
+	}
+}
+
+func main()
+{
+	let arr;
+	arr[0] = 3;
+	arr[1] = 9;
+	arr[2] = 15;
+	arr[3] = 92;
+
+	ret = addToArray(arr,1,5);
+
+	let pi = arr[0] + arr[1]/100 + arr[2]/10000 + arr[3]/1000000;
+}
