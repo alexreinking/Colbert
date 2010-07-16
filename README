@@ -19,10 +19,13 @@ Notes about the ALPHA-STAGE interpretor:
   1) There is no code to handle errors, bad input will often crash or hang the program.
      My goal, so far has been ONLY to get simple programs to run. Once the language is complete
      and bug free on my test programs, I will add error handling.
-  2) Because If statements, and by extention, loops, are buggy as HELL, I have removed them from this version of the interpretor, so that you can actually run the example program.
+  2) Because If statements, and by extention, loops, are buggy as HELL, I have removed them from this version of the interpretor,
+     so that you can actually run the example program.
   3) The syntax is superficially similar to C/C++, you should be able to extend, and experiment with my example
   4) There are no I/O facilities. 
      The interpretor prints a textual representation of the code tree, and all of the changes to variables as the program runs so you can see what happens.
+  5) The name comes from the comedian Stephen Colbert. I had his book, "I Am America (And So Can You!)" on my desk when I was thinking of a name.
+     His last name was the first word I saw.
 
 ---
 
@@ -84,13 +87,14 @@ Hope you can still appreciate some ALPHA software. ;)
 
 Here's the sloccount output:
 
-Total Physical Source Lines of Code (SLOC)                = 1,999
-Development Effort Estimate, Person-Years (Person-Months) = 0.41 (4.97)
+Total Physical Source Lines of Code (SLOC)                = 2,130
+Development Effort Estimate, Person-Years (Person-Months) = 0.44 (5.31)
  (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
-Schedule Estimate, Years (Months)                         = 0.38 (4.60)
+Schedule Estimate, Years (Months)                         = 0.39 (4.71)
  (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
-Estimated Average Number of Developers (Effort/Schedule)  = 1.08
-Total Estimated Cost to Develop                           = $ 55,911
+Estimated Average Number of Developers (Effort/Schedule)  = 1.13
+Total Estimated Cost to Develop                           = $ 59,764
  (average salary = $56,286/year, overhead = 2.40).
+
 
 (C) 2010 Alex Reinking

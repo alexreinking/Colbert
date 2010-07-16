@@ -9,15 +9,26 @@ func addToArray(@ref,i,n)
 	}
 }
 
+func pow(base,power)
+{
+    let tmp = 1;
+    while(power)
+    {
+        tmp = tmp * base;
+        power = power-1;
+    }
+    return tmp;
+}
+
 func main()
 {
 	let arr;
 	arr[0] = 3;
-	arr[1] = 9;
+	arr[1] = 10;
 	arr[2] = 15;
 	arr[3] = 92;
 
-	ret = addToArray(arr,1,0);
+	ret = addToArray(arr,1,pow(2,2));
 
 	let pi = arr[0] + arr[1]/100 + arr[2]/10000 + arr[3]/1000000;
 }

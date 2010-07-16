@@ -274,9 +274,9 @@ QList<CodeTreeNode*> Parser::parseIf(CodeTreeNode *parent, int &index)
 QList<CodeTreeNode*> Parser::parseWhile(CodeTreeNode *parent, int &index)
 {
     QList<CodeTreeNode*> branch;
+
     while(index < myScanner->getTokens().size())
     {
-        Token currentToken = myScanner->getTokens().at(index);
         if(myScanner->getTokens().at(index).getType() == Token::While)
         {
             branch.append(new WhileLoopNode());
@@ -285,27 +285,18 @@ QList<CodeTreeNode*> Parser::parseWhile(CodeTreeNode *parent, int &index)
             if(myScanner->getTokens().at(index).getType() == Token::OpenParen)
             {
                 index++;
-                int depth = 1;
-                QList<Token> cond;
-                while(index < myScanner->getTokens().size() && depth)
-                {
-                    if(myScanner->getTokens().at(index).getType() == Token::CloseParen)
-                        depth--;
-                    else if(myScanner->getTokens().at(index).getType() == Token::OpenParen)
-                        depth++;
-                    cond << myScanner->getTokens().at(index++);
-                }
-                cond.removeLast();
+                ExpressionNode* cond = static_cast<ExpressionNode*>(parseLogic(branch.last(),index));
                 static_cast<WhileLoopNode*>(branch.last())->setCondition(cond);
+                index++;
                 if(myScanner->getTokens().at(index).getType() == Token::OpenBlock)
                 {
                     index++;
-                    static_cast<WhileLoopNode*>(branch.last())->setChildren(parseBlock(branch.last(), index));
+                    static_cast<WhileLoopNode*>(branch.last())->setChildren(parseBlock(branch.first(), index));
                 }
             }
             else
             {
-                cerr << "Parser: Malformed while loop!" << endl;
+                cerr << "Parser: Malformed while statement!" << endl;
                 return QList<CodeTreeNode*>();
             }
         }
@@ -713,10 +704,8 @@ void Parser::printTree(QList<CodeTreeNode*> nodes)
             break;
         case WhileLoop:
             tmp = "";
-            foreach(Token t, static_cast<WhileLoopNode*>(n)->getCondition()) {
-                tmp += t.getConstData();
-            }
-            cout << qPrintable(indent) << "While: " << qPrintable(tmp) << " : " << n->getParent() << endl;
+            cout << qPrintable(indent) << "While(" << qPrintable(printExp(QList<ExpressionNode*>() << static_cast<WhileLoopNode*>(n)->getCondition()))
+                    << "): " << qPrintable(tmp) << " : " << n->getParent() << endl;
             cout << qPrintable(indent) << "|--- Children ---|" << endl;
             d++;
             printTree(static_cast<WhileLoopNode*>(n)->getChildren());

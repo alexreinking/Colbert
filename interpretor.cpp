@@ -131,6 +131,9 @@ QVariant Interpretor::interpretFunction(FunctionRow *func, QList<VariableRow*> a
         case If:
             interpretIf(static_cast<IfNode*>(currentInstruction));
             break;
+        case WhileLoop:
+            interpretWhileLoop(static_cast<WhileLoopNode*>(currentInstruction));
+            break;
         default:
             break;
         }
@@ -165,6 +168,46 @@ void Interpretor::interpretAssignment(AssignmentNode *assign)
     }
 }
 
+
+void Interpretor::interpretWhileLoop(WhileLoopNode *whileNode)
+{
+    Scope *myScope = new Scope();
+    scopes.push(myScope);
+
+    QVariant conditionResult;
+    conditionResult = interpretMath(whileNode->getCondition());
+    while(int(conditionResult.toDouble()))
+    {
+        for(int i = 0; i < whileNode->getChildren().size(); i++)
+        {
+            CodeTreeNode* currentInstruction = whileNode->getChildren().at(i);
+            switch(currentInstruction->myType())
+            {
+            case Definition:
+                interpretDefinition(static_cast<DefinitionNode*>(currentInstruction));
+                break;
+            case Function:
+                addFunctionToScope(static_cast<FunctionNode*>(currentInstruction));
+                break;
+            case Assignment:
+                interpretAssignment(static_cast<AssignmentNode*>(currentInstruction));
+                break;
+            case If:
+                interpretIf(static_cast<IfNode*>(currentInstruction));
+                break;
+            case WhileLoop:
+                interpretWhileLoop(static_cast<WhileLoopNode*>(currentInstruction));
+                break;
+            default:
+                break;
+            }
+        }
+        conditionResult = interpretMath(whileNode->getCondition());
+    }
+    scopes.pop();
+}
+
+
 void Interpretor::interpretIf(IfNode *ifNode)
 {
     Scope *myScope = new Scope();
@@ -190,6 +233,9 @@ void Interpretor::interpretIf(IfNode *ifNode)
                 break;
             case If:
                 interpretIf(static_cast<IfNode*>(currentInstruction));
+                break;
+            case WhileLoop:
+                interpretWhileLoop(static_cast<WhileLoopNode*>(currentInstruction));
                 break;
             default:
                 break;
@@ -221,6 +267,9 @@ void Interpretor::interpretIf(IfNode *ifNode)
                         case If:
                             interpretIf(static_cast<IfNode*>(currentInstruction));
                             break;
+                        case WhileLoop:
+                            interpretWhileLoop(static_cast<WhileLoopNode*>(currentInstruction));
+                            break;
                         default:
                             break;
                         }
@@ -244,6 +293,9 @@ void Interpretor::interpretIf(IfNode *ifNode)
                         break;
                     case If:
                         interpretIf(static_cast<IfNode*>(currentInstruction));
+                        break;
+                    case WhileLoop:
+                        interpretWhileLoop(static_cast<WhileLoopNode*>(currentInstruction));
                         break;
                     default:
                         break;

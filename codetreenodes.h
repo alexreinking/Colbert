@@ -140,20 +140,20 @@ private:
 class WhileLoopNode : public CodeTreeNode
 {
 public:
-    WhileLoopNode() { mType = WhileLoop; }
+    WhileLoopNode() { mType = WhileLoop; condition = 0; }
 
-    void setCondition(QList<Token> cond)
+    void setCondition(ExpressionNode* cond)
     { condition = cond; }
     void setChildren(QList<CodeTreeNode*> kids)
     { children = kids; }
     void addChild(CodeTreeNode* kid)
     { children.append(kid); }
 
-    QList<Token> getCondition() { return condition; }
+    ExpressionNode* getCondition() { return condition; }
     QList<CodeTreeNode*> getChildren() { return children; }
 
 private:
-    QList<Token> condition;
+    ExpressionNode* condition;
     QList<CodeTreeNode*> children;
 };
 
@@ -189,7 +189,7 @@ class ElseIfNode;
 class IfNode : public CodeTreeNode
 {
 public:
-    IfNode() { mType = If; }
+    IfNode() { mType = If; condition = 0; }
 
     void setCondition(ExpressionNode* cond)
     { condition = cond; }
@@ -213,7 +213,7 @@ private:
 class ElseIfNode : public IfNode
 {
 public:
-    ElseIfNode() { mType = ElseIf; cond = false; }
+    ElseIfNode() { mType = ElseIf; cond = false; condition = 0; }
 
     void setCondition(ExpressionNode* cond)
     { condition = cond; }
