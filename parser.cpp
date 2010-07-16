@@ -234,8 +234,6 @@ QList<CodeTreeNode*> Parser::parseIf(CodeTreeNode *parent, int &index)
                     static_cast<IfNode*>(branch.first())->setCondition(cond);
                 index++;
 
-                cout << "HERE! Token Info(" << index << ") const-data: " << qPrintable(myScanner->getTokens().at(index).getConstData()) << endl;
-
                 if(myScanner->getTokens().at(index).getType() == Token::OpenBlock)
                 {
                     index++;
@@ -425,13 +423,6 @@ QList<CodeTreeNode*> Parser::parseFunc(CodeTreeNode *parent, int &index)
     }
     return branch;
 }
-
-/* logic:
-   expr && expr
-   expr || expr
-   expr == expr
-   expr != expr
-*/
 
 CodeTreeNode* Parser::parseLogic(CodeTreeNode* parent, int& index)
 {

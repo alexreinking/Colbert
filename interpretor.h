@@ -21,6 +21,8 @@ private:
     void interpretIf(IfNode* ifNode);
     void interpretWhileLoop(WhileLoopNode* whileNode);
 
+    void interpretBlock(QList<CodeTreeNode*> block);
+
     QVariant interpretFunction(FunctionRow* func, QList<VariableRow*> args = QList<VariableRow*>());
     QVariant interpretMath(ExpressionNode* exp);
 

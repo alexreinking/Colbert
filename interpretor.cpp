@@ -178,30 +178,7 @@ void Interpretor::interpretWhileLoop(WhileLoopNode *whileNode)
     conditionResult = interpretMath(whileNode->getCondition());
     while(int(conditionResult.toDouble()))
     {
-        for(int i = 0; i < whileNode->getChildren().size(); i++)
-        {
-            CodeTreeNode* currentInstruction = whileNode->getChildren().at(i);
-            switch(currentInstruction->myType())
-            {
-            case Definition:
-                interpretDefinition(static_cast<DefinitionNode*>(currentInstruction));
-                break;
-            case Function:
-                addFunctionToScope(static_cast<FunctionNode*>(currentInstruction));
-                break;
-            case Assignment:
-                interpretAssignment(static_cast<AssignmentNode*>(currentInstruction));
-                break;
-            case If:
-                interpretIf(static_cast<IfNode*>(currentInstruction));
-                break;
-            case WhileLoop:
-                interpretWhileLoop(static_cast<WhileLoopNode*>(currentInstruction));
-                break;
-            default:
-                break;
-            }
-        }
+        interpretBlock(whileNode->getChildren());
         conditionResult = interpretMath(whileNode->getCondition());
     }
     scopes.pop();
@@ -215,97 +192,53 @@ void Interpretor::interpretIf(IfNode *ifNode)
 
     QVariant conditionResult;
     conditionResult = interpretMath(ifNode->getCondition());
-    if(int(conditionResult.toDouble()))
-    {
-        for(int i = 0; i < ifNode->getChildren().size(); i++)
-        {
-            CodeTreeNode* currentInstruction = ifNode->getChildren().at(i);
-            switch(currentInstruction->myType())
-            {
-            case Definition:
-                interpretDefinition(static_cast<DefinitionNode*>(currentInstruction));
-                break;
-            case Function:
-                addFunctionToScope(static_cast<FunctionNode*>(currentInstruction));
-                break;
-            case Assignment:
-                interpretAssignment(static_cast<AssignmentNode*>(currentInstruction));
-                break;
-            case If:
-                interpretIf(static_cast<IfNode*>(currentInstruction));
-                break;
-            case WhileLoop:
-                interpretWhileLoop(static_cast<WhileLoopNode*>(currentInstruction));
-                break;
-            default:
-                break;
-            }
-        }
-    }
-    else
-    {
+    if(int(conditionResult.toDouble())) {
+        interpretBlock(ifNode->getChildren());
+    } else {
         foreach(ElseIfNode* elseIf, ifNode->getNeighbor())
         {
             if(elseIf->getCondition()) {
                 conditionResult = interpretMath(elseIf->getCondition());
                 if(int(conditionResult.toDouble()))
                 {
-                    for(int i = 0; i < elseIf->getChildren().size(); i++)
-                    {
-                        CodeTreeNode* currentInstruction = elseIf->getChildren().at(i);
-                        switch(currentInstruction->myType())
-                        {
-                        case Definition:
-                            interpretDefinition(static_cast<DefinitionNode*>(currentInstruction));
-                            break;
-                        case Function:
-                            addFunctionToScope(static_cast<FunctionNode*>(currentInstruction));
-                            break;
-                        case Assignment:
-                            interpretAssignment(static_cast<AssignmentNode*>(currentInstruction));
-                            break;
-                        case If:
-                            interpretIf(static_cast<IfNode*>(currentInstruction));
-                            break;
-                        case WhileLoop:
-                            interpretWhileLoop(static_cast<WhileLoopNode*>(currentInstruction));
-                            break;
-                        default:
-                            break;
-                        }
-                    }
+                    interpretBlock(elseIf->getChildren());
                     break;
                 }
             } else {
-                for(int i = 0; i < elseIf->getChildren().size(); i++)
-                {
-                    CodeTreeNode* currentInstruction = elseIf->getChildren().at(i);
-                    switch(currentInstruction->myType())
-                    {
-                    case Definition:
-                        interpretDefinition(static_cast<DefinitionNode*>(currentInstruction));
-                        break;
-                    case Function:
-                        addFunctionToScope(static_cast<FunctionNode*>(currentInstruction));
-                        break;
-                    case Assignment:
-                        interpretAssignment(static_cast<AssignmentNode*>(currentInstruction));
-                        break;
-                    case If:
-                        interpretIf(static_cast<IfNode*>(currentInstruction));
-                        break;
-                    case WhileLoop:
-                        interpretWhileLoop(static_cast<WhileLoopNode*>(currentInstruction));
-                        break;
-                    default:
-                        break;
-                    }
-                }
+                interpretBlock(elseIf->getChildren());
                 break;
             }
         }
     }
     scopes.pop();
+}
+
+void Interpretor::interpretBlock(QList<CodeTreeNode *>block)
+{
+    for(int i = 0; i < block.size(); i++)
+    {
+        CodeTreeNode* currentInstruction = block.at(i);
+        switch(currentInstruction->myType())
+        {
+        case Definition:
+            interpretDefinition(static_cast<DefinitionNode*>(currentInstruction));
+            break;
+        case Function:
+            addFunctionToScope(static_cast<FunctionNode*>(currentInstruction));
+            break;
+        case Assignment:
+            interpretAssignment(static_cast<AssignmentNode*>(currentInstruction));
+            break;
+        case If:
+            interpretIf(static_cast<IfNode*>(currentInstruction));
+            break;
+        case WhileLoop:
+            interpretWhileLoop(static_cast<WhileLoopNode*>(currentInstruction));
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 QVariant Interpretor::interpretMath(ExpressionNode *exp)
