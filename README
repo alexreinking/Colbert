@@ -19,12 +19,11 @@ Notes about the ALPHA-STAGE interpretor:
   1) There is no code to handle errors, bad input will often crash or hang the program.
      My goal, so far has been ONLY to get simple programs to run. Once the language is complete
      and bug free on my test programs, I will add error handling.
-  2) Because If statements, and by extention, loops, are buggy as HELL, I have removed them from this version of the interpretor,
      so that you can actually run the example program.
-  3) The syntax is superficially similar to C/C++, you should be able to extend, and experiment with my example
-  4) There are no I/O facilities. 
+  2) The syntax is superficially similar to C/C++, you should be able to extend, and experiment with my example
+  3) There are no I/O facilities yet.
      The interpretor prints a textual representation of the code tree, and all of the changes to variables as the program runs so you can see what happens.
-  5) The name comes from the comedian Stephen Colbert. I had his book, "I Am America (And So Can You!)" on my desk when I was thinking of a name.
+  4) The name comes from the comedian Stephen Colbert. I had his book, "I Am America (And So Can You!)" on my desk when I was thinking of a name.
      His last name was the first word I saw.
 
 ---
