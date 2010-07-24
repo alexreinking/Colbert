@@ -13,7 +13,7 @@ func addToArray(@ref,i,n)
 	}
 }
 
-func pow(base,power)
+func pow(base,power) //This function is totally unnecessary given the ** operator
 {
     let tmp = 1;
     while(power)
@@ -35,7 +35,7 @@ func main()
 	ret = addToArray(arr,1,pow(2,2));
 
 	let pi = arr[0] + arr[1]/100 + arr[2]/10000 + arr[3]/1000000;
-	result = print("Pi is approximately: " + pi + "\n");
-	let angle = prompt("Enter an angle: ");
-	result = print("The cosine of your angle is approximately: " + cos(angle*pi/180) + "\n");	
+	result = print("Pi is approximately: " + pi + "\n"); //Print is defined externally
+	let angle = prompt("Enter an angle: "); //Prompt is defined externally
+	result = print("The cosine of your angle is approximately: " + cos(angle*pi/180) + "\n"); //Cos is defined externally
 }

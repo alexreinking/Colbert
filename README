@@ -16,15 +16,10 @@ If you have a 64-bit openSuSE operating system (11.2 or later) you may be able t
 ---
 
 Notes about the ALPHA-STAGE interpretor:
-  1) There is no code to handle errors, bad input will often crash or hang the program.
+  There is no code to handle errors, bad input will often crash or hang the program.
      My goal, so far has been ONLY to get simple programs to run. Once the language is complete
      and bug free on my test programs, I will add error handling.
      so that you can actually run the example program.
-  2) The syntax is superficially similar to C/C++, you should be able to extend, and experiment with my example
-  3) There are no I/O facilities yet.
-     The interpretor prints a textual representation of the code tree, and all of the changes to variables as the program runs so you can see what happens.
-  4) The name comes from the comedian Stephen Colbert. I had his book, "I Am America (And So Can You!)" on my desk when I was thinking of a name.
-     His last name was the first word I saw.
 
 ---
 
@@ -86,13 +81,13 @@ Hope you can still appreciate some ALPHA software. ;)
 
 Here's the sloccount output:
 
-Total Physical Source Lines of Code (SLOC)                = 2,130
-Development Effort Estimate, Person-Years (Person-Months) = 0.44 (5.31)
+Total Physical Source Lines of Code (SLOC)                = 2,289
+Development Effort Estimate, Person-Years (Person-Months) = 0.48 (5.73)
  (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
-Schedule Estimate, Years (Months)                         = 0.39 (4.71)
+Schedule Estimate, Years (Months)                         = 0.40 (4.85)
  (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
-Estimated Average Number of Developers (Effort/Schedule)  = 1.13
-Total Estimated Cost to Develop                           = $ 59,764
+Estimated Average Number of Developers (Effort/Schedule)  = 1.18
+Total Estimated Cost to Develop                           = $ 64,457
  (average salary = $56,286/year, overhead = 2.40).
 
 (C) 2010 Alex Reinking
