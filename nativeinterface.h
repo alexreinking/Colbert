@@ -7,7 +7,8 @@
 class NativeInterface : public QObject
 {
 public:
-    NativeInterface();
+    virtual ~NativeInterface() {}
+    virtual QList<NativeFunctionRow*> getFunctions() = 0;
 };
 
 #endif // NATIVEINTERFACE_H
