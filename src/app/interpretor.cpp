@@ -131,15 +131,15 @@ QVariant Interpretor::interpretFunction(FunctionRow *func, QList<VariableRow*> a
 {
     QVariant result = Invalid;
     if(func->getType() == NativeFunctionSymbol) {
-        QList<QVariant> nativeArgs;
-        foreach(VariableRow* var, args)
-        {
-            VariableRow* fullyResolved = var;
-            while(fullyResolved->isPointer())
-                fullyResolved = fullyResolved->getPointer();
-            nativeArgs << fullyResolved->getValue();
-        }
-        return static_cast<NativeFunctionRow*>(func)->callFunction(nativeArgs);
+//        QList<QVariant> nativeArgs;
+//        foreach(VariableRow* var, args)
+//        {
+//            VariableRow* fullyResolved = var;
+//            while(fullyResolved->isPointer())
+//                fullyResolved = fullyResolved->getPointer();
+//            nativeArgs << fullyResolved->getValue();
+//        }
+        return static_cast<NativeFunctionRow*>(func)->callFunction(args);
     }
     Scope *myScope = new Scope();
     scopes.push(myScope);

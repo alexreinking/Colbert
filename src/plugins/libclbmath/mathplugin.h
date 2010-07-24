@@ -13,13 +13,15 @@ class MathPlugin : public QObject, NativeInterface
     Q_INTERFACES(NativeInterface)
 public:
     QList<NativeFunctionRow*> getFunctions();
-    static QVariant ___cos(QList<QVariant> args);
-    static QVariant ___sin(QList<QVariant> args);
+    static QVariant ___cos(QList<VariableRow*> args);
+    static QVariant ___sin(QList<VariableRow*> args);
+    static QVariant ___tan(QList<VariableRow*> args);
 
 private:
     QList<NativeFunctionRow*> functionList;
     NativeFunctionRow* createCos();
     NativeFunctionRow* createSin();
+    NativeFunctionRow* createTan();
 };
 
 #endif // MATHPLUGIN_H

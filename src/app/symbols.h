@@ -80,7 +80,7 @@ class NativeFunctionRow : public FunctionRow
 {
 public:
     NativeFunctionRow() { mType = NativeFunctionSymbol; f = 0; }
-    QVariant callFunction(QList<QVariant> args)
+    QVariant callFunction(QList<VariableRow*> args)
     {
         if(f) {
             return f(args);
@@ -88,10 +88,10 @@ public:
             return QVariant::Invalid;
         }
     }
-    void setFunction(QVariant (*func)(QList<QVariant>)) { f = func; }
+    void setFunction(QVariant (*func)(QList<VariableRow*>)) { f = func; }
 
 private:
-    QVariant (*f)(QList<QVariant>);
+    QVariant (*f)(QList<VariableRow*>);
 };
 
 

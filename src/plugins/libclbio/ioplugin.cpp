@@ -14,9 +14,9 @@ QList<NativeFunctionRow*> IOPlugin::getFunctions()
     return functionList;
 }
 
-QVariant IOPlugin::___print(QList<QVariant> args)
+QVariant IOPlugin::___print(QList<VariableRow*> args)
 {
-    cout << qPrintable(args.first().toString());
+    cout << qPrintable(args.first()->getValue().toString());
     return 0;
 }
 
@@ -39,9 +39,9 @@ NativeFunctionRow* IOPlugin::createPrint()
     return func;
 }
 
-QVariant IOPlugin::___prompt(QList<QVariant> args)
+QVariant IOPlugin::___prompt(QList<VariableRow*> args)
 {
-    cout << qPrintable(args.first().toString());
+    cout << qPrintable(args.first()->getValue().toString());
     string in;
     cin >> in;
     return QVariant(QString(in.c_str()));

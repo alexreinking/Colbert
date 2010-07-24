@@ -13,8 +13,8 @@ class IOPlugin : public QObject, NativeInterface
     Q_INTERFACES(NativeInterface)
 public:
     QList<NativeFunctionRow*> getFunctions();
-    static QVariant ___print(QList<QVariant> args);
-    static QVariant ___prompt(QList<QVariant> args);
+    static QVariant ___print(QList<VariableRow*> args);
+    static QVariant ___prompt(QList<VariableRow*> args);
 
 private:
     QList<NativeFunctionRow*> functionList;

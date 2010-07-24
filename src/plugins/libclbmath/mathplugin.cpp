@@ -11,16 +11,17 @@ QList<NativeFunctionRow*> MathPlugin::getFunctions()
 
         functionList << createCos();
         functionList << createSin();
+        functionList << createTan();
     }
     return functionList;
 }
 
-QVariant MathPlugin::___cos(QList<QVariant> args)
+QVariant MathPlugin::___cos(QList<VariableRow*> args)
 {
     if(args.length() != 1)
         return QVariant::Invalid;
     bool ok;
-    double angle = args.first().toDouble(&ok);
+    double angle = args.first()->getValue().toDouble(&ok);
     if(ok)
         return cos(angle);
     return QVariant::Invalid;
@@ -45,12 +46,12 @@ NativeFunctionRow* MathPlugin::createCos()
     return func;
 }
 
-QVariant MathPlugin::___sin(QList<QVariant> args)
+QVariant MathPlugin::___sin(QList<VariableRow*> args)
 {
     if(args.length() != 1)
         return QVariant::Invalid;
     bool ok;
-    double angle = args.first().toDouble(&ok);
+    double angle = args.first()->getValue().toDouble(&ok);
     if(ok)
         return sin(angle);
     return QVariant::Invalid;
@@ -64,6 +65,36 @@ NativeFunctionRow* MathPlugin::createSin()
 
     FunctionNode* syntheticNode = new FunctionNode();
     syntheticNode->setName(Token(Token::Identifier,"sin"));
+
+    ExpressionVariableNode* syntheticArgument = new ExpressionVariableNode();
+    syntheticArgument->setPointer(false);
+    syntheticArgument->setValue(Token(Token::Identifier,"r"));
+
+    syntheticNode->setParameters(QList<ExpressionVariableNode*>() << syntheticArgument);
+
+    func->setNode(syntheticNode);
+    return func;
+}
+
+QVariant MathPlugin::___tan(QList<VariableRow*> args)
+{
+    if(args.length() != 1)
+        return QVariant::Invalid;
+    bool ok;
+    double angle = args.first()->getValue().toDouble(&ok);
+    if(ok)
+        return tan(angle);
+    return QVariant::Invalid;
+}
+
+NativeFunctionRow* MathPlugin::createTan()
+{
+    NativeFunctionRow* func = new NativeFunctionRow();
+    func->setName("tan");
+    func->setFunction(___tan);
+
+    FunctionNode* syntheticNode = new FunctionNode();
+    syntheticNode->setName(Token(Token::Identifier,"tan"));
 
     ExpressionVariableNode* syntheticArgument = new ExpressionVariableNode();
     syntheticArgument->setPointer(false);
