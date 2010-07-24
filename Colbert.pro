@@ -10,11 +10,13 @@ SOURCES += main.cpp \
     scanner.cpp \
     parser.cpp \
     codetreenodes.cpp \
-    interpretor.cpp
+    interpretor.cpp \
+    nativeinterface.cpp
 HEADERS += scanner.h \
     token.h \
     scope.h \
     parser.h \
     codetreenodes.h \
     symbols.h \
-    interpretor.h
+    interpretor.h \
+    nativeinterface.h

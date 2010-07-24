@@ -19,9 +19,7 @@ int main(int argc, char *argv[])
     Parser p(&s);
     p.buildTree();
     //    foreach(Token tk, s.getTokens())
-    //    {
     //        cout << qPrintable(tk.getConstData()) << endl;
-    //    }
     p.printTree(p.getTree());
     Interpretor in(&p);
     in.beginInterpretation();

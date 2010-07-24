@@ -7,7 +7,7 @@
 #include "token.h"
 #include "codetreenodes.h"
 
-enum SymbolType { Invalid, VariableSymbol, FunctionSymbol };
+enum SymbolType { Invalid, VariableSymbol, FunctionSymbol, NativeFunctionSymbol };
 
 class Symbol
 {
@@ -69,9 +69,29 @@ public:
     FunctionNode* getNode() { return node; }
     void setNode(FunctionNode* n) { node = n; }
 
+protected:
+    FunctionNode* node;
+
 private:
     QList<CodeTreeNode*> body;
-    FunctionNode* node;
+};
+
+class NativeFunctionRow : public FunctionRow
+{
+public:
+    NativeFunctionRow() { mType = NativeFunctionSymbol; f = 0; }
+    QVariant callFunction(QList<QVariant> args)
+    {
+        if(f) {
+            return f(args);
+        } else {
+            return QVariant::Invalid;
+        }
+    }
+    void setFunction(QVariant (*func)(QList<QVariant>)) { f = func; }
+
+private:
+    QVariant (*f)(QList<QVariant>);
 };
 
 
