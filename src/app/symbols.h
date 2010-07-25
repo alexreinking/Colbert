@@ -36,7 +36,9 @@ public:
 
     void setValue(const QVariant& v, int row = 0) {
         if(row >= value.size()) {
-            value.resize(row+1);
+            while(value.size() != row+1) {
+                value.append(0);
+            }
         }
         value[row] = v;
     }

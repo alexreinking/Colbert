@@ -426,7 +426,7 @@ QList<CodeTreeNode*> Parser::parseFunc(CodeTreeNode *parent, int &index)
 
 CodeTreeNode* Parser::parseLogic(CodeTreeNode* parent, int& index)
 {
-    CodeTreeNode *top = parseExpression(parent, index);
+    CodeTreeNode *top = parseIntermediateLogic(parent, index);
     while(index < myScanner->getTokens().size())
     {
         Token op = myScanner->getTokens().at(index);
@@ -434,6 +434,32 @@ CodeTreeNode* Parser::parseLogic(CodeTreeNode* parent, int& index)
         {
         case Token::And:
         case Token::Or:
+            index++;
+            break;
+        default:
+            return top;
+            break;
+        }
+
+        ExpressionNode* tmp = new ExpressionNode();
+        CodeTreeNode *right = parseIntermediateLogic(parent,index);
+        tmp->setLeft(static_cast<ExpressionNode*>(top));
+        tmp->setRight(static_cast<ExpressionNode*>(right));
+        tmp->setOperator(op);
+        tmp->setParent(parent);
+        top = tmp;
+    }
+    return top;
+}
+
+CodeTreeNode* Parser::parseIntermediateLogic(CodeTreeNode* parent, int& index)
+{
+    CodeTreeNode *top = parseExpression(parent, index);
+    while(index < myScanner->getTokens().size())
+    {
+        Token op = myScanner->getTokens().at(index);
+        switch(op.getType())
+        {
         case Token::Equal:
         case Token::NotEqual:
         case Token::LessThan:

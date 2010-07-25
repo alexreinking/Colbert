@@ -20,6 +20,7 @@ Notes about the ALPHA-STAGE interpretor:
      My goal, so far has been ONLY to get simple programs to run. Once the language is complete
      and bug free on my test programs, I will add error handling.
      so that you can actually run the example program.
+  Turing completeness has been proven via the sucessful creation of a BrainFuck interpreter. The program can be found in bf.clb.
 
 ---
 

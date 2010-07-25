@@ -25,6 +25,7 @@ private:
     ExpressionVariableNode* parseLValue(CodeTreeNode* parent, int& index, bool allowRef = false); //((@))ID(([EXP]))
 
     CodeTreeNode* parseLogic(CodeTreeNode* parent, int& index); //Only builds a tree, does NOT evaluate.
+    CodeTreeNode* parseIntermediateLogic(CodeTreeNode* parent, int& index);
     CodeTreeNode* parseExpression(CodeTreeNode* parent, int& index);
     CodeTreeNode* parseAddition(CodeTreeNode* parent, int& index);
     CodeTreeNode* parseMultiplication(CodeTreeNode* parent, int& index);

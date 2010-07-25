@@ -131,14 +131,14 @@ QVariant Interpretor::interpretFunction(FunctionRow *func, QList<VariableRow*> a
 {
     QVariant result = Invalid;
     if(func->getType() == NativeFunctionSymbol) {
-//        QList<QVariant> nativeArgs;
-//        foreach(VariableRow* var, args)
-//        {
-//            VariableRow* fullyResolved = var;
-//            while(fullyResolved->isPointer())
-//                fullyResolved = fullyResolved->getPointer();
-//            nativeArgs << fullyResolved->getValue();
-//        }
+        //        QList<QVariant> nativeArgs;
+        //        foreach(VariableRow* var, args)
+        //        {
+        //            VariableRow* fullyResolved = var;
+        //            while(fullyResolved->isPointer())
+        //                fullyResolved = fullyResolved->getPointer();
+        //            nativeArgs << fullyResolved->getValue();
+        //        }
         return static_cast<NativeFunctionRow*>(func)->callFunction(args);
     }
     Scope *myScope = new Scope();
@@ -222,6 +222,7 @@ void Interpretor::interpretWhileLoop(WhileLoopNode *whileNode)
     {
         interpretBlock(whileNode->getChildren());
         conditionResult = interpretMath(whileNode->getCondition());
+        scopes.last()->setSymbols(QList<Symbol*>());
     }
     scopes.pop();
 }
@@ -252,6 +253,7 @@ void Interpretor::interpretIf(IfNode *ifNode)
             }
         }
     }
+    delete myScope;
     scopes.pop();
 }
 
@@ -376,6 +378,18 @@ QVariant Interpretor::interpretMath(ExpressionNode *exp)
                 return QVariant::Invalid;
             }
             break;
+        case Token::Modulo:
+            l = left.toDouble(&okD1);
+            r = right.toDouble(&okD2);
+            if(okD1 && okD2)
+            {
+                result = int(abs(l)) % int(abs(r));
+            }
+            else
+            {
+                return QVariant::Invalid;
+            }
+            break;
         case Token::Power:
             l = left.toDouble(&okD1);
             r = right.toDouble(&okD2);
@@ -401,7 +415,9 @@ QVariant Interpretor::interpretMath(ExpressionNode *exp)
             }
             else
             {
-                return QVariant::Invalid;
+                result = (left.toString() == right.toString());
+                if(exp->getNegative())
+                    result = result.toDouble() * -1.0;
             }
             break;
         case Token::NotEqual:
@@ -415,7 +431,9 @@ QVariant Interpretor::interpretMath(ExpressionNode *exp)
             }
             else
             {
-                return QVariant::Invalid;
+                result = (left.toString() != right.toString());
+                if(exp->getNegative())
+                    result = result.toDouble() * -1.0;
             }
             break;
         case Token::GreaterThan:

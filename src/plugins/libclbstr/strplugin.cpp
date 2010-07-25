@@ -11,6 +11,7 @@ QList<NativeFunctionRow*> StringPlugin::getFunctions()
         functionList << createSplit();
         functionList << createStrlen();
         functionList << createJoin();
+        functionList << createToAscii();
     }
     return functionList;
 }
@@ -98,6 +99,37 @@ NativeFunctionRow* StringPlugin::createStrlen()
     ExpressionVariableNode* syntheticArgument = new ExpressionVariableNode();
     syntheticArgument->setPointer(false);
     syntheticArgument->setValue(Token(Token::Identifier,"str"));
+
+    syntheticNode->setParameters(QList<ExpressionVariableNode*>() << syntheticArgument);
+
+    func->setNode(syntheticNode);
+    return func;
+}
+
+QVariant StringPlugin::__toAscii(QList<VariableRow*> args)
+{
+    if(args.length() != 1)
+        return QVariant::Invalid;
+    VariableRow* var = args.first();
+    bool ok;
+    int encoded = var->getValue().toInt(&ok);
+    if(ok)
+        return QString("%1").arg(QChar::fromAscii((char)encoded));
+    return QVariant::Invalid;
+}
+
+NativeFunctionRow* StringPlugin::createToAscii()
+{
+    NativeFunctionRow* func = new NativeFunctionRow();
+    func->setName("toAscii");
+    func->setFunction(__toAscii);
+
+    FunctionNode* syntheticNode = new FunctionNode();
+    syntheticNode->setName(Token(Token::Identifier,"toAscii"));
+
+    ExpressionVariableNode* syntheticArgument = new ExpressionVariableNode();
+    syntheticArgument->setPointer(false);
+    syntheticArgument->setValue(Token(Token::Identifier,"ch"));
 
     syntheticNode->setParameters(QList<ExpressionVariableNode*>() << syntheticArgument);
 

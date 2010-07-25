@@ -16,12 +16,14 @@ public:
     static QVariant __split(QList<VariableRow*> args);
     static QVariant __strlen(QList<VariableRow*> args);
     static QVariant __join(QList<VariableRow*> args);
+    static QVariant __toAscii(QList<VariableRow*> args);
 
 private:
     QList<NativeFunctionRow*> functionList;
     NativeFunctionRow* createSplit();
     NativeFunctionRow* createStrlen();
     NativeFunctionRow* createJoin();
+    NativeFunctionRow* createToAscii();
 };
 
 #endif // STRINGPLUGIN_H

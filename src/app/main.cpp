@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     p.buildTree();
     //    foreach(Token tk, s.getTokens())
     //        cout << qPrintable(tk.getConstData()) << endl;
-    //    p.printTree(p.getTree());
+//    p.printTree(p.getTree());
     Interpretor in(&p);
     in.beginInterpretation();
     return 0;
