@@ -36,6 +36,6 @@ func main()
 
 	let pi = arr[0] + arr[1]/100 + arr[2]/10000 + arr[3]/1000000;
 	result = print("Pi is approximately: " + pi + "\n"); //Print is defined externally
-	let angle = prompt("Enter an angle: "); //Prompt is defined externally
-	result = print("The cosine of your angle is approximately: " + tan(angle*pi/180) + "\n"); //Cos is defined externally
+	let angle = prompt("Enter an angle(degrees): "); //Prompt is defined externally
+	result = print("The tangent of your angle is approximately: " + tan(angle*(pi+0.000000653589793)/180) + "\n"); //Cos is defined externally
 }
