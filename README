@@ -23,6 +23,22 @@ Notes about the ALPHA-STAGE interpretor:
 
 ---
 
+The built-in functions work as follows:
++------------------+--------------------------------------+----------------------------------------------------------------------+
+|     FUNCTION     |             ARGUMENTS                |                                 EFFECT                               |
++------------------+--------------------------------------+----------------------------------------------------------------------+
+| func cos(r)      | r: degree in radians                 | Returns cosine of r                                                  |
+| func sin(r)      | r: degree in radians                 | Returns sine of r                                                    |
+| func tan(r)      | r: degree in radians                 | Returns tangent of f                                                 |
+| func print(str)  | str: string to print                 | Prints str to stdout                                                 |
+| func prompt(str) | str: string to prompt with           | Prints str to stdout, returns first "word" from stdin                |
+| func split(@str) | str: string to split into char array | Splits str into an array of single characters. Returns an error code |
+| func join(@str)  | str: char array to merge into string | Joins character array str into a single string. Returns that string  |
+| func strlen(str) | str: single string to find length of | Returns the length of the single string str                          |
++------------------+--------------------------------------+----------------------------------------------------------------------+
+
+---
+
 Here is a detailed explanation as to how Colbert works:
 
 1) A stream of characters, part of the program is fed into the program:
@@ -69,25 +85,25 @@ Here is a simple diagram of a scope:
 | FUNC | main     | <Command List>  |
 -------------------------------------
 
-If a variable is not in the current scope or one of the parent scopes, you cannot access that variable.
+If a variable is not in the current scope or one of the parent scopes, it will be created in the most deeply nested scope. (A command line option will eventually disable this)
 
 6) The main function is looked up, and execution begins. All functions get their own scope every time they are called,
-   functions are able to modify variables of their callers, but this action can be undefined.
+   functions are able to modify variables of their callers, but this action can be undefined. Instead precede a function argument with '@' -- this turns the varaible into a reference.
 
 7) If there are no errors, the interpretor runs the whole program and exits cleanly. Otherwise, since I haven't written any
    error handling code, it will crash.
 
-Hope you can still appreciate some ALPHA software. ;)
+Hope you can still appreciate some ALPHA software. :)
 
 Here's the sloccount output:
 
-Total Physical Source Lines of Code (SLOC)                = 2,289
-Development Effort Estimate, Person-Years (Person-Months) = 0.48 (5.73)
+Total Physical Source Lines of Code (SLOC)                = 2,418
+Development Effort Estimate, Person-Years (Person-Months) = 0.51 (6.07)
  (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
-Schedule Estimate, Years (Months)                         = 0.40 (4.85)
+Schedule Estimate, Years (Months)                         = 0.41 (4.96)
  (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
-Estimated Average Number of Developers (Effort/Schedule)  = 1.18
-Total Estimated Cost to Develop                           = $ 64,457
+Estimated Average Number of Developers (Effort/Schedule)  = 1.22
+Total Estimated Cost to Develop                           = $ 68,276
  (average salary = $56,286/year, overhead = 2.40).
 
 (C) 2010 Alex Reinking

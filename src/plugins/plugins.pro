@@ -4,4 +4,5 @@
 
 TEMPLATE = subdirs
 SUBDIRS = libclbio \
-          libclbmath
+          libclbmath \
+          libclbstr
