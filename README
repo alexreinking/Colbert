@@ -98,13 +98,13 @@ Hope you can still appreciate some ALPHA software. :)
 
 Here's the sloccount output:
 
-Total Physical Source Lines of Code (SLOC)                = 2,418
-Development Effort Estimate, Person-Years (Person-Months) = 0.51 (6.07)
+Total Physical Source Lines of Code (SLOC)                = 2,491
+Development Effort Estimate, Person-Years (Person-Months) = 0.52 (6.26)
  (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
-Schedule Estimate, Years (Months)                         = 0.41 (4.96)
+Schedule Estimate, Years (Months)                         = 0.42 (5.02)
  (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
-Estimated Average Number of Developers (Effort/Schedule)  = 1.22
-Total Estimated Cost to Develop                           = $ 68,276
+Estimated Average Number of Developers (Effort/Schedule)  = 1.25
+Total Estimated Cost to Develop                           = $ 70,442
  (average salary = $56,286/year, overhead = 2.40).
 
 (C) 2010 Alex Reinking
