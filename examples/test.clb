@@ -1,0 +1,41 @@
+//************************************************\
+//* This is a simple test program to show off the *
+//* features of Colbert.                          *
+//************************************************/
+func addToArray(@ref,i,n)
+{
+	if(n > 0) {
+		ref[i] = ref[i] + n;
+	} else if(n == 0) {
+		ref[i] = ref[i] + 3;
+	} else {
+		ref[i] = ref[i] + 1;
+	}
+}
+
+func pow(base,power)
+{
+    let tmp = 1;
+    while(power)
+    {
+        tmp = tmp * base;
+        power = power-1;
+    }
+    return tmp;
+}
+
+func main()
+{
+	let arr;
+	arr[0] = 3;
+	arr[1] = 10;
+	arr[2] = 15;
+	arr[3] = 92;
+
+	ret = addToArray(arr,1,pow(2,2));
+
+	let pi = arr[0] + arr[1]/100 + arr[2]/10000 + arr[3]/1000000;
+	result = print("Pi is approximately: " + pi + "\n");
+	let angle = prompt("Enter an angle: ");
+	result = print("The cosine of your angle is approximately: " + cos(angle*pi/180) + "\n");	
+}
