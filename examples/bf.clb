@@ -1,0 +1,71 @@
+//This is a BF interpretor, written in Colbert
+let err = 0;
+
+let memory = 0;
+let ptr = 0;
+
+let program = "";
+let i = 0;
+
+let len = 0;
+
+func main()
+{
+    memory[12] = 0;
+    program = "+++++++++++>+>>>>++++++++++++++++++++"
+            + "++++++++++++++++++++++++>++++++++++++"
+            + "++++++++++++++++++++<<<<<<[>[>>>>>>+>"
+            + "+<<<<<<<-]>>>>>>>[<<<<<<<+>>>>>>>-]<["
+            + ">++++++++++[-<-[>>+>+<<<-]>>>[<<<+>>>"
+            + "-]+<[>[-]<[-]]>[<<[>>>+<<<-]>>[-]]<<]"
+            + ">>>[>>+>+<<<-]>>>[<<<+>>>-]+<[>[-]<[-"
+            + "]]>[<<+>>[-]]<<<<<<<]>>>>>[++++++++++"
+            + "+++++++++++++++++++++++++++++++++++++"
+            + "+.[-]]++++++++++<[->-<]>+++++++++++++"
+            + "+++++++++++++++++++++++++++++++++++.["
+            + "-]<<<<<<<<<<<<[>>>+>+<<<<-]>>>>[<<<<+"
+            + ">>>>-]<-[>>.>.<<<[-]]<<[>>+>+<<<-]>>>"
+            + "[<<<+>>>-]<<[<+>-]>[<+>-]<<<-]";
+    len = strlen(program);
+    err = split(program);
+    while(i < len)
+    {
+	if(program[i] == ">") {
+	    ptr = ptr+1;
+	} else if(program[i] == "<") {
+	    ptr = ptr-1;
+	} else if(program[i] == "+") {
+	    memory[ptr] = (memory[ptr] + 1)%256;
+	} else if(program[i] == "-") {
+	    memory[ptr] = (memory[ptr] - 1)%256;
+	} else if(program[i] == ".") {
+	    err = print(toAscii(memory[ptr]));
+	} else if(program[i] == "[") {
+	    if(memory[ptr] == 0) {
+		let depth = 1;
+		while((depth) && (i < len)) {
+		    i=i+1;
+		    if(program[i] == "[") {
+			depth = depth+1;
+		    } else if(program[i] == "]") {
+			depth = depth-1;
+		    }
+		}
+	    }
+	} else if(program[i] == "]") {
+	    if(memory[ptr]) {
+		let depth = 1;
+		while(depth && i < len) {
+		    i=i-1;
+		    if(program[i] == "]") {
+			depth = depth+1;
+		    } else if(program[i] == "[") {
+			depth = depth-1;
+		    }
+		}
+	    }
+	}
+	i=i+1;
+    }
+    err = print("\n");
+}

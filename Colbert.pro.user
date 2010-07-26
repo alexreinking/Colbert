@@ -6,7 +6,9 @@
  </data>
  <data>
   <variable>RunConfiguration0-CommandLineArguments</variable>
-  <valuelist type="QVariantList"/>
+  <valuelist type="QVariantList">
+   <value type="QString">bf.clb</value>
+  </valuelist>
  </data>
  <data>
   <variable>RunConfiguration0-ProFile</variable>
@@ -14,7 +16,7 @@
  </data>
  <data>
   <variable>RunConfiguration0-RunConfiguration.name</variable>
-  <value type="QString">app</value>
+  <value type="QString"> Colbert</value>
  </data>
  <data>
   <variable>RunConfiguration0-UseDyldImageSuffix</variable>
@@ -30,15 +32,15 @@
  </data>
  <data>
   <variable>RunConfiguration0-UserSetName</variable>
-  <value type="bool">false</value>
+  <value type="bool">true</value>
  </data>
  <data>
   <variable>RunConfiguration0-UserSetWorkingDirectory</variable>
-  <value type="bool">false</value>
+  <value type="bool">true</value>
  </data>
  <data>
   <variable>RunConfiguration0-UserWorkingDirectory</variable>
-  <value type="QString"></value>
+  <value type="QString">/home/alex/Development/C++/Qt/Colbert</value>
  </data>
  <data>
   <variable>RunConfiguration0-type</variable>
@@ -99,7 +101,6 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=en_US.UTF-8</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator:/usr/lib64/mpi/gcc/openmpi/lib64</value>
     <value type="QString">LESS=-M -I -R</value>
     <value type="QString">LESSCLOSE=lessclose.sh %s %s</value>
@@ -198,7 +199,6 @@
     <value type="QString">KDE_SESSION_UID=1000</value>
     <value type="QString">KDE_SESSION_VERSION=4</value>
     <value type="QString">LANG=en_US.UTF-8</value>
-    <value type="QString">LANGUAGE=</value>
     <value type="QString">LD_LIBRARY_PATH=/usr/lib/qtcreator:/usr/lib64/mpi/gcc/openmpi/lib64</value>
     <value type="QString">LESS=-M -I -R</value>
     <value type="QString">LESSCLOSE=lessclose.sh %s %s</value>
