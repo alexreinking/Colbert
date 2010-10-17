@@ -10,6 +10,7 @@ QList<NativeFunctionRow*> IOPlugin::getFunctions()
     if(functionList.isEmpty()) {
         functionList << createPrint();
         functionList << createPrompt();
+        functionList << createGetch();
     }
     return functionList;
 }
@@ -61,6 +62,26 @@ NativeFunctionRow* IOPlugin::createPrompt()
     syntheticArgument->setValue(Token(Token::Identifier,"message"));
 
     syntheticNode->setParameters(QList<ExpressionVariableNode*>() << syntheticArgument);
+
+    func->setNode(syntheticNode);
+    return func;
+}
+
+QVariant IOPlugin::___getch(QList<VariableRow *>args)
+{
+    Q_UNUSED(args);
+    char in = cin.get();
+    return QVariant(in);
+}
+
+NativeFunctionRow* IOPlugin::createGetch()
+{
+    NativeFunctionRow* func = new NativeFunctionRow();
+    func->setName("getch");
+    func->setFunction(___getch);
+
+    FunctionNode* syntheticNode = new FunctionNode();
+    syntheticNode->setName(Token(Token::Identifier,"getch"));
 
     func->setNode(syntheticNode);
     return func;

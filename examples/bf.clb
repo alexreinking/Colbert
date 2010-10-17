@@ -59,6 +59,8 @@ func main()
 	    memory[ptr] = memory[ptr]%256;
 	} else if(program[i] == ".") {
 	    err = print(toAscii(memory[ptr]));
+	} else if(program[i] == ",") {
+	    memory[ptr] = getch();
 	} else if(program[i] == "[") {
 	    if(memory[ptr] == 0) {
 		let depth = 1;
