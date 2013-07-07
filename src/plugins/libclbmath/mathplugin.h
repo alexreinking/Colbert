@@ -10,6 +10,7 @@
 class MathPlugin : public QObject, NativeInterface
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "com.alexreinking.Colbert.plugins.MathPlugin" FILE "math.json")
     Q_INTERFACES(NativeInterface)
 public:
     QList<NativeFunctionRow*> getFunctions();

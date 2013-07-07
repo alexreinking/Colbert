@@ -10,6 +10,7 @@
 class StringPlugin : public QObject, NativeInterface
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "com.alexreinking.Colbert.plugins.StringPlugin" FILE "string.json")
     Q_INTERFACES(NativeInterface)
 public:
     QList<NativeFunctionRow*> getFunctions();

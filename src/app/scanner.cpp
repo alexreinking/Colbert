@@ -21,27 +21,23 @@ bool Scanner::setInput(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return false;
+        cerr << "Could not open file " << qPrintable(fileName) << "!" << endl;
+        exit(0);
     }
     QTextStream in(&file);
     fileText = in.readAll();
     return true;
 }
 
-inline bool isIdentifierCharacter(char c)
+inline bool isIdentifierCharacter(QChar c)
 {
     return ( ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <='z')) || c == '_');
 }
 
-inline bool isNumerical(char c)
-{
-    return (c >= '0' && c <= '9');
-}
-
-inline bool isSymbol(char c)
+inline bool isSymbol(QChar c)
 {
     QString syms("+-*/%^;!<>(){}=,[]@:&|");
-    return (syms.indexOf(QChar::fromAscii(c)) != -1);
+    return (syms.indexOf(c) != -1);
 }
 
 Token::Type Scanner::determineKeyword(const QString &s)
@@ -77,94 +73,94 @@ inline bool isWhitespace(char c)
 
 Token::Type Scanner::determineOperator(const QString &s)
 {
-    char c1, c2, c3;
+    QChar c1, c2, c3;
     c1 = c2 = c3 = 0;
     if(s.size() >= 1)
-        c1 = s.at(0).toAscii();
+        c1 = s.at(0);
     if(s.size() >= 2)
-        c2 = s.at(1).toAscii();
+        c2 = s.at(1);
     if(s.size() >= 3)
-        c3 = s.at(2).toAscii();
+        c3 = s.at(2);
 
-    if(c1 == '>' && !c3) {
+    if(c1 == '>' && c3.isNull()) {
         if(c2 == '=')
             return Token::GreaterThanOrEqualTo;
-        else if(!c2)
+        else if(c2.isNull())
             return Token::GreaterThan;
-    } else if(c1 == '<' && !c3) {
+    } else if(c1 == '<' && c3.isNull()) {
         if(c2 == '=')
             return Token::LessThanOrEqualTo;
-        else if(!c2)
+        else if(c2.isNull())
             return Token::LessThan;
     } else if(c1 == '=') {
-        if(c2 == '=' && !c3)
+        if(c2 == '=' && c3.isNull())
             return Token::Equal;
         else if(c2 == '/' && c3 == '=')
             return Token::NotEqual;
-        else if(!c2 && !c3)
+        else if(c2.isNull() && c3.isNull())
             return Token::Assignment;
-    } else if(c1 == '+' && !c3) {
+    } else if(c1 == '+' && c3.isNull()) {
         if(c2 == '=')
             return Token::AddAssignment;
         else if(c2 == '+')
             return Token::Increment;
-        else if(!c2)
+        else if(c2.isNull())
             return Token::Addition;
-    } else if(c1 == '-' && !c3) {
+    } else if(c1 == '-' && c3.isNull()) {
         if(c2 == '=')
             return Token::SubAssignment;
         else if(c2 == '-')
             return Token::Decrement;
-        else if(!c2)
+        else if(c2.isNull())
             return Token::Subtraction;
-    } else if(c1 == '*' && !c3) {
+    } else if(c1 == '*' && c3.isNull()) {
         if(c2 == '=')
             return Token::MultAsssignment;
         else if(c2 == '*')
             return Token::Power;
-        else if(!c2)
+        else if(c2.isNull())
             return Token::Multiplication;
-    } else if(c1 == '/' && !c3) {
+    } else if(c1 == '/' && c3.isNull()) {
         if(c2 == '=')
             return Token::DivAssignment;
-        else if(!c2)
+        else if(c2.isNull())
             return Token::Division;
     } else if(c1 == '!') {
-        if(c2 == '=' && !c3)
+        if(c2 == '=' && c3.isNull())
             return Token::NotEqual;
-        else if(!c2 && !c3)
+        else if(c2.isNull() && c3.isNull())
             return Token::Not;
     } else if(c1 == '&') {
-        if(c2 == '&' && !c3)
+        if(c2 == '&' && c3.isNull())
             return Token::And;
     } else if(c1 == '|') {
-        if(c2 == '|' && !c3)
+        if(c2 == '|' && c3.isNull())
             return Token::Or;
-    } else if(c1 == '^' && !c2 && !c3) {
+    } else if(c1 == '^' && c2.isNull() && c3.isNull()) {
         return Token::Xor;
-    } else if(c1 == ';' && !c2 && !c3) {
+    } else if(c1 == ';' && c2.isNull() && c3.isNull()) {
         return Token::Semicolon;
-    } else if(c1 == '(' && !c2 && !c3) {
+    } else if(c1 == '(' && c2.isNull() && c3.isNull()) {
         return Token::OpenParen;
-    } else if(c1 == ')' && !c2 && !c3) {
+    } else if(c1 == ')' && c2.isNull() && c3.isNull()) {
         return Token::CloseParen;
-    } else if(c1 == '{' && !c2 && !c3) {
+    } else if(c1 == '{' && c2.isNull() && c3.isNull()) {
         return Token::OpenBlock;
-    } else if(c1 == '}' && !c2 && !c3) {
+    } else if(c1 == '}' && c2.isNull() && c3.isNull()) {
         return Token::CloseBlock;
-    } else if(c1 == '\"' && !c2 && !c3) {
+    } else if(c1 == '\"' && c2.isNull() && c3.isNull()) {
         return Token::StringDelimiter;
-    } else if(c1 == ',' && !c2 && !c3) {
+    } else if(c1 == ',' && c2.isNull() && c3.isNull()) {
         return Token::Comma;
-    } else if(c1 == '%' && !c2 && !c3) {
+    } else if(c1 == '%' && c2.isNull() && c3.isNull()) {
         return Token::Modulo;
-    } else if(c1 == '[' && !c2 && !c3) {
+    } else if(c1 == '[' && c2.isNull() && c3.isNull()) {
         return Token::ArrayOpen;
-    } else if(c1 == ']' && !c2 && !c3) {
+    } else if(c1 == ']' && c2.isNull() && c3.isNull()) {
         return Token::ArrayClose;
-    } else if(c1 == '@' && !c2 && !c3) {
+    } else if(c1 == '@' && c2.isNull() && c3.isNull()) {
         return Token::ReferenceType;
-    } else if(c1 == ':' && c2 == '=' && !c3) {
+    } else if(c1 == ':' && c2 == '=' && c3.isNull()) {
         return Token::ReferenceAssignment;
     }
     return Token::None;
@@ -175,14 +171,14 @@ void Scanner::refreshTokens()
     enum State { Unknown, Identifier, Number, Operator, String };
     State state = Unknown;
     Token currentLexeme;
-    char c;
+    QChar c;
     QString buffer = "";
     tokenized = false;
 
     for(int i = 0; i <= fileText.size(); i++)
     {
         if(i != fileText.size())
-            c = fileText.at(i).toAscii();
+            c = fileText.at(i);
         else
             c = 0;
         switch(state)
@@ -195,9 +191,9 @@ void Scanner::refreshTokens()
                 state = String;
             else if(c == '/') {
                 if(i+1 < fileText.size()) {
-                    if(fileText.at(i+1).toAscii() == '/') {
+                    if(fileText.at(i+1) == '/') {
                         buffer.chop(1);
-                        while(i < fileText.size() && fileText.at(i).toAscii() != '\n')
+                        while(i < fileText.size() && fileText.at(i) != '\n')
                         {
                             i++;
                         }
@@ -208,7 +204,7 @@ void Scanner::refreshTokens()
                     }
                 }
             }
-            else if(isNumerical(c))
+            else if(c.isDigit())
                 state = Number;
             else if(isSymbol(c))
                 state = Operator;
@@ -217,7 +213,7 @@ void Scanner::refreshTokens()
             }
             break;
         case Identifier:
-            if(isIdentifierCharacter(c) || isNumerical(c)) {
+            if(isIdentifierCharacter(c) || c.isDigit()) {
                 buffer += c;
             } else {
                 if(keywords.contains(buffer))
@@ -232,7 +228,7 @@ void Scanner::refreshTokens()
             }
             break;
         case Number:
-            if(isNumerical(c) || c == '.') {
+            if(c.isDigit() || c == '.') {
                 buffer += c;
             } else {
                 currentLexeme.setType(Token::Number);
@@ -255,7 +251,7 @@ void Scanner::refreshTokens()
                     buffer += c;
                     addedIndex++;
                     if(addedIndex+i != fileText.size())
-                        c = fileText.at(i+addedIndex).toAscii();
+                        c = fileText.at(i+addedIndex);
                     else
                         break;
                 }
@@ -285,7 +281,7 @@ void Scanner::refreshTokens()
                 if(i+1 < fileText.size()) {
                     i++;
                     buffer.chop(1);
-                    switch(fileText.at(i).toAscii())
+                    switch(fileText.at(i).toLatin1())
                     {
                     case '\\':
                         buffer.append('\\');

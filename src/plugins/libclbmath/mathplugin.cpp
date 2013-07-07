@@ -105,5 +105,3 @@ NativeFunctionRow* MathPlugin::createTan()
     func->setNode(syntheticNode);
     return func;
 }
-
-Q_EXPORT_PLUGIN2(clbmath, MathPlugin)

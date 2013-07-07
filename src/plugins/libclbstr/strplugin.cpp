@@ -114,7 +114,7 @@ QVariant StringPlugin::__toAscii(QList<VariableRow*> args)
     bool ok;
     int encoded = var->getValue().toInt(&ok);
     if(ok)
-        return QString("%1").arg(QChar::fromAscii((char)encoded));
+        return QString("%1").arg(QChar::fromLatin1((char)encoded));
     return QVariant::Invalid;
 }
 
@@ -136,5 +136,3 @@ NativeFunctionRow* StringPlugin::createToAscii()
     func->setNode(syntheticNode);
     return func;
 }
-
-Q_EXPORT_PLUGIN2(clbstr, StringPlugin)

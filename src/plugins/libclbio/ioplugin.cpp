@@ -86,5 +86,3 @@ NativeFunctionRow* IOPlugin::createGetch()
     func->setNode(syntheticNode);
     return func;
 }
-
-Q_EXPORT_PLUGIN2(clbio, IOPlugin)
