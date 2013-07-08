@@ -67,7 +67,9 @@ void Interpretor::loadPlugins()
             for(int i = 0; i < nativePlugin->getFunctions().length(); i++) {
                 scopes.top()->addSymbol(nativePlugin->getFunctions().at(i));
 #ifdef DEBUG
-                cout << "Adding native function: " << qPrintable(static_cast<NativeFunctionRow*>(nativePlugin->getFunctions().at(i))->getName()) << endl;
+                cout << "Adding native function: "
+                     << qPrintable(static_cast<NativeFunctionRow*>(nativePlugin->getFunctions().at(i))->getName())
+                     << endl;
 #endif
             }
         } else {
@@ -579,8 +581,9 @@ QVariant Interpretor::interpretMath(ExpressionNode *exp)
         Symbol* func;
         func = findSymbol(static_cast<ExpressionFunctionNode*>(exp)->getName().getConstData());
         if(!func) {
-            cerr << "FATAL: Function \"" << qPrintable(static_cast<ExpressionFunctionNode*>(exp)->getName().getConstData())
-                    << "\" not found!" << endl;
+            cerr << "FATAL: Function \""
+                 << qPrintable(static_cast<ExpressionFunctionNode*>(exp)->getName().getConstData())
+                 << "\" not found!" << endl;
             exit(1);
         }
         if(func->getType() == FunctionSymbol || func->getType() == NativeFunctionSymbol) {
@@ -589,7 +592,9 @@ QVariant Interpretor::interpretMath(ExpressionNode *exp)
             foreach(CodeTreeNode* arg, static_cast<ExpressionFunctionNode*>(exp)->getArgs())
             {
                 VariableRow* r = new VariableRow();
-                r->setName(static_cast<FunctionRow*>(func)->getNode()->getParameters().at(i)->getValue().getConstData());
+                r->setName(static_cast<FunctionRow*>(func)->getNode()->getParameters().at(i)
+                           ->getValue().getConstData());
+
                 FunctionNode* originalFunction = static_cast<FunctionRow*>(func)->getNode();
                 if(originalFunction->getParameters().at(i)->getPointer()) {
                     ExpressionVariableNode* argAsPtr = static_cast<ExpressionVariableNode*>(arg);

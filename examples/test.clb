@@ -24,6 +24,11 @@ func pow(base,power)
     return tmp;
 }
 
+func printLn(str)
+{
+        return print(str + "\n");
+}
+
 func main()
 {
 	let arr;
@@ -32,13 +37,13 @@ func main()
 	arr[2] = 15;
 	arr[3] = 92;
 
-	ret = addToArray(arr,1,pow(2,2));
+        ret = addToArray(arr,1,pow(2,2));
 
         let test = 4/2/2;
-        result = print("test = " + test + "\n")
+        result = printLn("test = " + test)
 
 	let pi = arr[0] + arr[1]/100 + arr[2]/10000 + arr[3]/1000000;
-	result = print("Pi is approximately: " + pi + "\n");
+        result = printLn("Pi is approximately: " + pi);
 	let angle = prompt("Enter an angle: ");
-	result = print("The cosine of your angle is approximately: " + cos(angle*pi/180) + "\n");	
+        result = printLn("The cosine of your angle is approximately: " + cos(angle*pi/180));
 }
