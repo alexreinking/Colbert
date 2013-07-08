@@ -37,13 +37,15 @@ func main()
 	arr[2] = 15;
 	arr[3] = 92;
 
-        ret = addToArray(arr,1,pow(2,2));
+	ret = addToArray(arr,1,pow(2,2));
 
-        let test = 4/2/2;
-        result = printLn("test = " + test)
+	let test = 4/2/2;
+	result = printLn("test = " + test)
 
 	let pi = arr[0] + arr[1]/100 + arr[2]/10000 + arr[3]/1000000;
-        result = printLn("Pi is approximately: " + pi);
+	result = printLn("Pi is approximately: " + pi);
 	let angle = prompt("Enter an angle: ");
-        result = printLn("The cosine of your angle is approximately: " + cos(angle*pi/180));
+	result = printLn("The cosine of your angle is approximately: " + cos(angle*pi/180));
+
+	ret = pause();
 }

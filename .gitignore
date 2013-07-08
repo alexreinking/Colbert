@@ -1,0 +1,26 @@
+#################
+# Visual Studio #
+#################
+*.psess
+*.sdf
+*.sln
+*.suo
+*Win32/
+*GeneratedFiles/
+
+###########
+# Objects #
+###########
+*.dll
+*.exp
+*.ilk
+*.lib
+*.pdb
+*.exe
+
+#################
+# Project Files #
+#################
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <limits>
 #include "ioplugin.h"
 using namespace std;
 
@@ -11,6 +12,7 @@ QList<NativeFunctionRow*> IOPlugin::getFunctions()
         functionList << createPrint();
         functionList << createPrompt();
         functionList << createGetch();
+		functionList << createPause();
     }
     return functionList;
 }
@@ -85,4 +87,26 @@ NativeFunctionRow* IOPlugin::createGetch()
 
     func->setNode(syntheticNode);
     return func;
+}
+
+QVariant IOPlugin::___pause(QList<VariableRow *> args)
+{
+	Q_UNUSED(args);
+    cout << "Press ENTER to continue..." << flush;
+    cin.sync();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	return QVariant();
+}
+
+NativeFunctionRow* IOPlugin::createPause()
+{
+	NativeFunctionRow* func = new NativeFunctionRow();
+	func->setName("pause");
+	func->setFunction(___pause);
+
+	FunctionNode* syntheticNode = new FunctionNode();
+	syntheticNode->setName(Token(Token::Identifier, "pause"));
+
+	func->setNode(syntheticNode);
+	return func;
 }

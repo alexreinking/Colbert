@@ -17,12 +17,14 @@ public:
     static QVariant ___print(QList<VariableRow*> args);
     static QVariant ___prompt(QList<VariableRow*> args);
     static QVariant ___getch(QList<VariableRow*> args);
+	static QVariant ___pause(QList<VariableRow*> args);
 
 private:
     QList<NativeFunctionRow*> functionList;
     NativeFunctionRow* createPrint();
     NativeFunctionRow* createPrompt();
     NativeFunctionRow* createGetch();
+	NativeFunctionRow* createPause();
 };
 
 #endif // IOPLUGIN_H
